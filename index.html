@@ -90,12 +90,19 @@
         }
     </script>
 
+    <script>
+        const isMobile = navigator.userAgentData.mobile; //resolves true/false
+        let displayMode = 'browser';
+        const mqStandAlone = '(display-mode: standalone)';
+        if (navigator.standalone || window.matchMedia(mqStandAlone).matches) {
+            alert('pwa');
+        }
+    </script>
+
     <script type="module">
         import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
         const el = document.createElement('pwa-update');
         document.body.appendChild(el);
-
-        const isMobile = navigator.userAgentData.mobile; //resolves true/false
 
         if (isMobile) {
             let deferredPrompt;
