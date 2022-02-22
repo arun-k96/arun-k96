@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Sample Page</title>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="manifest" href="manifest.json" />
+    <style>
+        .form-popup {
+            text-align: center;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            left: 10px;
+            z-index: 9;
+            background: #212529;
+            padding: 30px;
+            border-radius: 10px;
+            color: #fff;
+        }
+    </style>
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Header-->
+    <header class="bg-dark text-white p-2">
+        <div class="container px-4 text-center">
+            <h1 class="fw-bolder">Welcome to Sample Page</h1>
+            <p class="lead">A functional Bootstrap 5 boilerplate for one page scrolling websites</p>
+        </div>
+    </header>
+
+
+    <section id="about">
+        <div class="container px-4">
+            <div class="row gx-4 justify-content-center">
+                <div class="col-lg-8">
+                    <h2>About this page</h2>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container px-4">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+        </div>
+    </footer>
+    <style>
+    </style>
+
+    <div class="form-popup" id="myForm" style="display:none">
+        <span class="position-absolute top-0 end-0" style="margin: 10px 15px 0 0; cursor:pointer;"
+            onclick="closeForm()">&#10006;</span>
+        <p> Add To Home Screen</p>
+        <button class="add-button btn btn-info mb-2">Install</button>
+    </div>
+
+    <script>
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+
+    <script type="module">
+        import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+        const el = document.createElement('pwa-update');
+        document.body.appendChild(el);
+
+        const isMobile = navigator.userAgentData.mobile; //resolves true/false
+
+        if (isMobile) {
+            let deferredPrompt;
+            const addForm = document.querySelector('#myForm');
+            const addBtn = document.querySelector('.add-button');
+            addForm.style.display = 'none';
+            var check = 0;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Prevent Chrome 67 and earlier from automatically showing the prompt
+                e.preventDefault();
+                // Stash the event so it can be triggered later.
+                deferredPrompt = e;
+                // Update UI to notify the user they can add to home 
+                if (check == 0) {
+                    addForm.style.display = 'block';
+                }
+                addBtn.addEventListener('click', (e) => {
+                    // hide our user interface that shows our A2HS button
+
+                    addForm.style.display = 'none';
+                    // Show the prompt
+                    deferredPrompt.prompt();
+                    // Wait for the user to respond to the prompt
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the A2HS prompt');
+                        } else {
+                            console.log('User dismissed the A2HS prompt');
+                        }
+                        check = 1;
+                        deferredPrompt = null;
+                    });
+                });
+            });
+        }
+
+
+    </script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+</body>
+
+</html>
